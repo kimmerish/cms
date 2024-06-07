@@ -1,55 +1,60 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\SiteController;
-use App\Http\Controllers\NewsController;
-use App\Http\Controllers\PageController;
-use App\Http\Controllers\PortfolioController;
-use App\Http\Controllers\BotController;
-use App\Http\Controllers\ThemeController;
-use App\Http\Controllers\TemplateController;
-use App\Http\Controllers\EmailController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\WebServiceController;
-use App\Http\Controllers\UserUpdateController;
-use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\PluginController;
-use App\Http\Controllers\SettingController;
-use App\Http\Controllers\ToolController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\SiteController;
+use App\Http\Controllers\Admin\NewsController;
+use App\Http\Controllers\Admin\PageController;
+use App\Http\Controllers\Admin\PortfolioController;
+use App\Http\Controllers\Admin\BotController;
+use App\Http\Controllers\Admin\ThemeController;
+use App\Http\Controllers\Admin\TemplateController;
+use App\Http\Controllers\Admin\EmailController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\WebServiceController;
+use App\Http\Controllers\Admin\UserUpdateController;
+use App\Http\Controllers\Admin\PaymentController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\PluginController;
+use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\ToolController;
+use App\Http\Controllers\Admin\LogoutController;
+use App\Http\Controllers\Site\HomeController;
+use App\Http\Controllers\Site\GalleryController;
+use App\Http\Controllers\Site\AboutController;
+use App\Http\Controllers\Site\NewsController as SiteNewsController;
+use App\Http\Controllers\Site\MediaController;
+use App\Http\Controllers\Site\HelpController;
+use App\Http\Controllers\Site\ProjectsController;
+use App\Http\Controllers\Site\AuctionController;
+use App\Http\Controllers\Site\ContactsController;
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', [HomeController::class, 'index']);
+Route::get('gallery', [GalleryController::class, 'index']);
+Route::get('about', [AboutController::class, 'index']);
+Route::get('news', [SiteNewsController::class, 'index']);
+Route::get('media', [MediaController::class, 'index']);
+Route::get('help', [HelpController::class, 'index']);
+Route::get('projects', [ProjectsController::class, 'index']);
+Route::get('auction', [AuctionController::class, 'index']);
+Route::get('contacts', [ContactsController::class, 'index']);
+
+Route::prefix('admin')->group(function () {
+    Route::get('dashboard', [DashboardController::class, 'index']);
+    Route::get('site', [SiteController::class, 'index']);
+    Route::get('news', [NewsController::class, 'index']);
+    Route::get('page', [PageController::class, 'index']);
+    Route::get('portfolio', [PortfolioController::class, 'index']);
+    Route::get('bot', [BotController::class, 'index']);
+    Route::get('theme', [ThemeController::class, 'index']);
+    Route::get('template', [TemplateController::class, 'index']);
+    Route::get('email', [EmailController::class, 'index']);
+    Route::get('product', [ProductController::class, 'index']);
+    Route::get('webservice', [WebServiceController::class, 'index']);
+    Route::get('user-update', [UserUpdateController::class, 'index']);
+    Route::get('payment', [PaymentController::class, 'index']);
+    Route::get('user', [UserController::class, 'index']);
+    Route::get('plugin', [PluginController::class, 'index']);
+    Route::get('setting', [SettingController::class, 'index']);
+    Route::get('tool', [ToolController::class, 'index']);
+    Route::get('logout', [LogoutController::class, 'index']);
 });
-
-Route::middleware(['auth'])->prefix('admin')->group(function () {
-    Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
-
-    Route::resource('sites', SiteController::class);
-    Route::resource('news', NewsController::class);
-    Route::resource('pages', PageController::class);
-    Route::resource('portfolio', PortfolioController::class);
-    Route::resource('bots', BotController::class);
-    Route::resource('themes', ThemeController::class);
-    Route::resource('templates', TemplateController::class);
-    Route::resource('emails', EmailController::class);
-    Route::resource('products', ProductController::class);
-    Route::resource('web-services', WebServiceController::class);
-    Route::resource('user-updates', UserUpdateController::class);
-    Route::resource('payments', PaymentController::class);
-    Route::resource('users', UserController::class);
-    Route::resource('plugins', PluginController::class);
-    Route::resource('settings', SettingController::class);
-    Route::resource('tools', ToolController::class);
-});
-
-Route::get('/home', [SiteController::class, 'home'])->name('site.home');
-Route::get('/gallery', [SiteController::class, 'gallery'])->name('site.gallery');
-Route::get('/about-us', [SiteController::class, 'about'])->name('site.about');
-Route::get('/news', [SiteController::class, 'news'])->name('site.news');
-Route::get('/media', [SiteController::class, 'media'])->name('site.media');
-Route::get('/help', [SiteController::class, 'help'])->name('site.help');
-Route::get('/projects', [SiteController::class, 'projects'])->name('site.projects');
-Route::get('/auction', [SiteController::class, 'auction'])->name('site.auction');
-Route::get('/contacts', [SiteController::class, 'contacts'])->name('site.contacts');
